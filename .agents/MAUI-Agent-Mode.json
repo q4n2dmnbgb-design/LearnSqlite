@@ -1,5 +1,5 @@
 ﻿{
-    "studentCapabilityMode":  false,
+    "studentCapabilityMode":  true,
     "description":  {
                         "true":  "MAXIMIZE STUDENT CAPABILITY",
                         "false":  "MAXIMIZE CODE GENERATED"
