@@ -284,3 +284,4 @@ public HeroDetailsPage()
 5. **מבחן ההתמדה (Persistence Test):** עצור לחלוטין את ריצת האפליקציה ב-Visual Studio (**Stop Debugging** / סגירת האפליקציה במכשיר) והרץ אותה מחדש.
    * ב-`MockHeroService` (ענף `master`): כל השינויים היו נמחקים והרשימה הייתה מתאפסת.
    * ב-`SqliteHeroService` (ענף `sqlite`): כל ההוספות, העדכונים והמחיקות **נשמרים במלואם** משום שהם נקראים מתוך הקובץ `HeroesArchive.db3`!
+
