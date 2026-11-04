@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HeroesListPage Visual Model</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #0f172a;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+    }
+    [data-guide-overview] {
+      width: 390px;
+      margin: auto;
+      padding: 14px;
+      border-radius: 28px;
+      background: #f1f5f9;
+      box-shadow: 0 18px 48px rgba(2, 6, 23, 0.75);
+      border: 4px solid #334155;
+    }
+    [data-guide-block] {
+      position: relative;
+      margin-bottom: 12px;
+      border: 2px dashed #6366f1;
+      border-radius: 16px;
+      padding: 4px;
+    }
+    [data-guide-block]::after {
+      content: "Block: " attr(data-guide-block);
+      position: absolute;
+      top: -10px;
+      left: 12px;
+      background: #4f46e5;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      direction: ltr;
+    }
+    .hero-banner {
+      background: #1e3a8a;
+      color: white;
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .hero-banner h1 {
+      margin: 0 0 4px 0;
+      font-size: 19px;
+    }
+    .hero-banner p {
+      margin: 0;
+      font-size: 12px;
+      color: #bfdbfe;
+    }
+    .btn-add {
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-weight: 700;
+      font-size: 13px;
+    }
+    .search-bar {
+      background: white;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 10px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .search-input {
+      flex: 1;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 12px;
+      color: #475569;
+      background: #f8fafc;
+    }
+    .btn-search {
+      background: #0284c7;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .btn-clear {
+      background: #e2e8f0;
+      color: #1e293b;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .cards-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .hero-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero-avatar {
+      width: 68px;
+      height: 68px;
+      border-radius: 12px;
+      object-fit: cover;
+      background: #e2e8f0;
+      flex-shrink: 0;
+    }
+    .hero-info {
+      flex: 1;
+    }
+    .hero-name {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .hero-ego {
+      margin: 2px 0 4px 0;
+      font-size: 12px;
+      color: #475569;
+    }
+    .hero-badges {
+      display: flex;
+      gap: 8px;
+      font-size: 11px;
+      margin-bottom: 3px;
+    }
+    .pub-badge { color: #2563eb; font-weight: 700; }
+    .pwr-badge { color: #0d9488; font-weight: 600; }
+    .elite-badge { font-size: 11px; color: #64748b; }
+    .btn-details {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: none;
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .status-bar {
+      background: white;
+      border-radius: 10px;
+      padding: 8px;
+      text-align: center;
+      font-size: 11px;
+      color: #475569;
+    }
+  </style>
+</head>
+<body>
+  <main data-guide-overview>
+    <section data-guide-block="header-banner">
+      <div class="hero-banner">
+        <div>
+          <h1>🦸 ארכיון גיבורי-העל</h1>
+          <p>סה"כ גיבורים מוצגים בארכיון: 6</p>
+        </div>
+        <button class="btn-add" type="button">+ גיבור חדש</button>
+      </div>
+    </section>
+
+    <section data-guide-block="search-filter">
+      <div class="search-bar">
+        <div class="search-input">חפש לפי שם, זהות סודית או יקום...</div>
+        <button class="btn-search" type="button">חפש</button>
+        <button class="btn-clear" type="button">נקה</button>
+      </div>
+    </section>
+
+    <section data-guide-block="collection-list">
+      <div class="cards-list">
+        <div class="hero-card">
+          <img class="hero-avatar" src="https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/md/70-batman.jpg" alt="Batman">
+          <div class="hero-info">
+            <p class="hero-name">באטמן (Batman)</p>
+            <p class="hero-ego">ברוס ויין</p>
+            <div class="hero-badges">
+              <span class="pub-badge">DC</span>
+              <span class="pwr-badge">⚡ עוצמה: 88/100</span>
+            </div>
+            <div class="elite-badge">⭐ חבר צוות עלית</div>
+          </div>
+          <button class="btn-details" type="button">פרטים ⬅</button>
+        </div>
+
+        <div class="hero-card">
+          <img class="hero-avatar" src="https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/md/620-spider-man.jpg" alt="Spider-Man">
+          <div class="hero-info">
+            <p class="hero-name">ספיידרמן (Spider-Man)</p>
+            <p class="hero-ego">פיטר פארקר</p>
+            <div class="hero-badges">
+              <span class="pub-badge">Marvel</span>
+              <span class="pwr-badge">⚡ עוצמה: 85/100</span>
+            </div>
+            <div class="elite-badge">⭐ חבר צוות עלית</div>
+          </div>
+          <button class="btn-details" type="button">פרטים ⬅</button>
+        </div>
+
+        <div class="hero-card">
+          <img class="hero-avatar" src="https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/md/720-wonder-woman.jpg" alt="Wonder Woman">
+          <div class="hero-info">
+            <p class="hero-name">וונדר וומן (Wonder Woman)</p>
+            <p class="hero-ego">דיאנה פרינס</p>
+            <div class="hero-badges">
+              <span class="pub-badge">DC</span>
+              <span class="pwr-badge">⚡ עוצמה: 95/100</span>
+            </div>
+            <div class="elite-badge">⭐ חבר צוות עלית</div>
+          </div>
+          <button class="btn-details" type="button">פרטים ⬅</button>
+        </div>
+      </div>
+    </section>
+
+    <section data-guide-block="status-feedback">
+      <div class="status-bar">
+        🔄 ActivityIndicator (IsLoading) + הודעות משוב למשתמש
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:LearnSqlite.ViewModels"
+             x:Class="LearnSqlite.Views.HeroDetailsPage"
+             x:DataType="vm:HeroDetailsViewModel"
+             Title="{Binding Title}"
+             FlowDirection="RightToLeft"
+             BackgroundColor="#F1F5F9">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16"
+                             Spacing="14">
+
+            <!-- בלוק 1: כרטיס תצוגת גיבור ומזהה הרשומה (Primary Key) -->
+            <Border StrokeShape="RoundRectangle 16"
+                    BackgroundColor="#0F172A"
+                    StrokeThickness="0"
+                    Padding="16">
+                <Grid ColumnDefinitions="96,*"
+                      ColumnSpacing="14">
+                    <Border Grid.Column="0"
+                            StrokeShape="RoundRectangle 14"
+                            Stroke="#38BDF8"
+                            StrokeThickness="2"
+                            HeightRequest="96"
+                            WidthRequest="96"
+                            BackgroundColor="#1E293B">
+                        <Image Source="{Binding ImageUrl}"
+                               Aspect="AspectFill"
+                               HeightRequest="96"
+                               WidthRequest="96" />
+                    </Border>
+
+                    <VerticalStackLayout Grid.Column="1"
+                                         Spacing="4"
+                                         VerticalOptions="Center">
+                        <Label Text="{Binding Name}"
+                               FontSize="19"
+                               FontAttributes="Bold"
+                               TextColor="White" />
+                        <Label Text="{Binding AlterEgo}"
+                               FontSize="14"
+                               TextColor="#CBD5E1" />
+                        <Label Text="{Binding RecordIdDisplay}"
+                               FontSize="12"
+                               FontAttributes="Bold"
+                               TextColor="#38BDF8" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <!-- בלוק 2: טופס עריכת שדות הרשומה -->
+            <Border StrokeShape="RoundRectangle 14"
+                    BackgroundColor="White"
+                    Stroke="#CBD5E1"
+                    StrokeThickness="1"
+                    Padding="16">
+                <VerticalStackLayout Spacing="12">
+
+                    <Label Text="שם גיבור-העל:"
+                           FontSize="13"
+                           FontAttributes="Bold"
+                           TextColor="#1E293B" />
+                    <Entry Text="{Binding Name}"
+                           Placeholder="שם הגיבור"
+                           TextColor="#0F172A" />
+
+                    <Label Text="זהות סודית / שם אמיתי:"
+                           FontSize="13"
+                           FontAttributes="Bold"
+                           TextColor="#1E293B" />
+                    <Entry Text="{Binding AlterEgo}"
+                           Placeholder="זהות סודית"
+                           TextColor="#0F172A" />
+
+                    <Label Text="יקום / הוצאה לאור:"
+                           FontSize="13"
+                           FontAttributes="Bold"
+                           TextColor="#1E293B" />
+                    <Picker Title="בחר יקום קומיקס"
+                            ItemsSource="{Binding AvailablePublishers}"
+                            SelectedItem="{Binding Publisher}"
+                            TextColor="#0F172A" />
+
+                    <Label Text="{Binding PowerLevelDisplay}"
+                           FontSize="13"
+                           FontAttributes="Bold"
+                           TextColor="#0D9488" />
+                    <Slider Minimum="1"
+                            Maximum="100"
+                            Value="{Binding PowerLevel}"
+                            MinimumTrackColor="#0D9488"
+                            ThumbColor="#0F766E" />
+
+                    <Grid ColumnDefinitions="*,Auto"
+                          VerticalOptions="Center">
+                        <Label Grid.Column="0"
+                               Text="חבר בצוות עלית (הנוקמים / ליגת הצדק)"
+                               FontSize="13"
+                               VerticalOptions="Center"
+                               TextColor="#1E293B" />
+                        <Switch Grid.Column="1"
+                                IsToggled="{Binding IsEliteMember}"
+                                OnColor="#2563EB" />
+                    </Grid>
+
+                    <Label Text="כתובת תמונה מהאינטרנט (Image URL):"
+                           FontSize="13"
+                           FontAttributes="Bold"
+                           TextColor="#1E293B" />
+                    <Entry Text="{Binding ImageUrl}"
+                           FlowDirection="LeftToRight"
+                           Placeholder="https://..."
+                           TextColor="#0F172A" />
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- בלוק 3: פעולות עדכון (Update), מחיקה (Delete) וחזרה -->
+            <ActivityIndicator IsRunning="{Binding IsLoading}"
+                               IsVisible="{Binding IsLoading}"
+                               Color="#2563EB"
+                               HorizontalOptions="Center" />
+
+            <Label Text="{Binding StatusMessage}"
+                   IsVisible="{Binding HasStatusMessage}"
+                   TextColor="#DC2626"
+                   FontSize="13"
+                   HorizontalOptions="Center" />
+
+            <Grid ColumnDefinitions="*,*"
+                  ColumnSpacing="12">
+                <Button Grid.Column="0"
+                        Text="💾 עדכן רשומה"
+                        Command="{Binding UpdateHeroCommand}"
+                        BackgroundColor="#2563EB"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        CornerRadius="12"
+                        HeightRequest="48" />
+
+                <Button Grid.Column="1"
+                        Text="🗑️ מחק רשומה"
+                        Command="{Binding DeleteHeroCommand}"
+                        BackgroundColor="#DC2626"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        CornerRadius="12"
+                        HeightRequest="48" />
+            </Grid>
+
+            <Button Text="⬅ חזרה לארכיון ללא שמירה"
+                    Command="{Binding GoBackCommand}"
+                    BackgroundColor="#E2E8F0"
+                    TextColor="#1E293B"
+                    FontAttributes="Bold"
+                    CornerRadius="12"
+                    HeightRequest="44" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

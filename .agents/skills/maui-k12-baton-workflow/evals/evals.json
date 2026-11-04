@@ -1,0 +1,23 @@
+{
+  "skill_name": "maui-k12-baton-workflow",
+  "evals": [
+    {
+      "id": "theory-only-keeps-core-student-owned",
+      "prompt": "My student correctly explained why SaveCommand uses CanExecute, but has not written or changed any command code. The agent made the current implementation. Update Student-Mastery and offer the next ownership split for a form with another command.",
+      "expected_output": "Record theory evidence but no applied coding evidence, keep Routine eligibility as No, and keep the new command's core logic student-owned with scaffolded practice rather than offering agent-owned routine work.",
+      "files": ["Learning/Student-Mastery.md", "ViewModels/ProfileViewModel.cs"]
+    },
+    {
+      "id": "explaining-agent-code-is-not-practice",
+      "prompt": "The student can walk me through a ViewModel that I generated yesterday and says they understand it. They have not authored a change. Can I mark MVVM commands as Can work independently and take the next command task myself?",
+      "expected_output": "Treat the explanation as theory evidence only, reject a full-mastery or routine-eligibility update, and propose a small student-authored modification plus verification as the next practice step.",
+      "files": ["Learning/Student-Mastery.md", "ViewModels/TasksViewModel.cs"]
+    },
+    {
+      "id": "two-tracks-allow-routine-repetition",
+      "prompt": "For Commands, the student has explained purpose and data flow, independently added CanExecute to a second form, explained the change, and verified the button state. The evidence includes their committed diff. We now need repeated command wiring on a third form. Negotiate ownership.",
+      "expected_output": "Record both evidence tracks and Routine eligibility as Yes for Commands, then offer the repeated command wiring as optional practice or agent-owned routine work while retaining student ownership for any new crucial concept.",
+      "files": ["Learning/Student-Mastery.md", "ViewModels/SecondFormViewModel.cs", "ViewModels/ThirdFormViewModel.cs"]
+    }
+  ]
+}

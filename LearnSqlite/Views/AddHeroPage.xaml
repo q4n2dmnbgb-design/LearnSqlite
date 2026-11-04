@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:LearnSqlite.ViewModels"
+             x:Class="LearnSqlite.Views.AddHeroPage"
+             x:DataType="vm:AddHeroViewModel"
+             Title="{Binding Title}"
+             FlowDirection="RightToLeft"
+             BackgroundColor="#F1F5F9">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16"
+                             Spacing="14">
+
+            <!-- בלוק 1: כותרת המסך ותצוגה מקדימה של תמונת הגיבור -->
+            <Border StrokeShape="RoundRectangle 16"
+                    BackgroundColor="#1E3A8A"
+                    StrokeThickness="0"
+                    Padding="16">
+                <Grid ColumnDefinitions="84,*"
+                      ColumnSpacing="14">
+                    <Border Grid.Column="0"
+                            StrokeShape="RoundRectangle 14"
+                            Stroke="White"
+                            StrokeThickness="2"
+                            HeightRequest="84"
+                            WidthRequest="84"
+                            BackgroundColor="#334155">
+                        <Image Source="{Binding ImageUrl}"
+                               Aspect="AspectFill"
+                               HeightRequest="84"
+                               WidthRequest="84" />
+                    </Border>
+
+                    <VerticalStackLayout Grid.Column="1"
+                                         Spacing="4"
+                                         VerticalOptions="Center">
+                        <Label Text="✨ הוספת גיבור-על חדש"
+                               FontSize="19"
+                               FontAttributes="Bold"
+                               TextColor="White" />
+                        <Label Text="מלא את פרטי הגיבור לשמירה במאגר הנתונים"
+                               FontSize="13"
+                               TextColor="#BFDBFE" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <!-- בלוק 2: טופס הזנת פרטי הגיבור -->
+            <Border StrokeShape="RoundRectangle 14"
+                    BackgroundColor="White"
+                    Stroke="#CBD5E1"
+                    StrokeThickness="1"
+                    Padding="16">
+                <VerticalStackLayout Spacing="12">
+
+                    <Label Text="שם גיבור-העל (חובה):"
+                           FontSize="13"
+                           FontAttributes="Bold"
+                           TextColor="#1E293B" />
+                    <Entry Placeholder="למשל: קפטן אמריקה (Captain America)"
+                           Text="{Binding Name}"
+                           TextColor="#0F172A" />
+
+                    <Label Text="זהות סודית / שם אמיתי (חובה):"
+                           FontSize="13"
+                           FontAttributes="Bold"
+                           TextColor="#1E293B" />
+                    <Entry Placeholder="למשל: סטיב רוג'רס"
+                           Text="{Binding AlterEgo}"
+                           TextColor="#0F172A" />
+
+                    <Label Text="יקום / הוצאה לאור:"
+                           FontSize="13"
+                           FontAttributes="Bold"
+                           TextColor="#1E293B" />
+                    <Picker Title="בחר יקום קומיקס"
+                            ItemsSource="{Binding AvailablePublishers}"
+                            SelectedItem="{Binding Publisher}"
+                            TextColor="#0F172A" />
+
+                    <Label Text="{Binding PowerLevelDisplay}"
+                           FontSize="13"
+                           FontAttributes="Bold"
+                           TextColor="#0D9488" />
+                    <Slider Minimum="1"
+                            Maximum="100"
+                            Value="{Binding PowerLevel}"
+                            MinimumTrackColor="#0D9488"
+                            ThumbColor="#0F766E" />
+
+                    <Grid ColumnDefinitions="*,Auto"
+                          VerticalOptions="Center">
+                        <Label Grid.Column="0"
+                               Text="חבר בצוות עלית (הנוקמים / ליגת הצדק)"
+                               FontSize="13"
+                               VerticalOptions="Center"
+                               TextColor="#1E293B" />
+                        <Switch Grid.Column="1"
+                                IsToggled="{Binding IsEliteMember}"
+                                OnColor="#2563EB" />
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- בלוק 3: כתובת תמונה מהאינטרנט (ImageUrl) וכפתורי בחירה מהירה -->
+            <Border StrokeShape="RoundRectangle 14"
+                    BackgroundColor="White"
+                    Stroke="#CBD5E1"
+                    StrokeThickness="1"
+                    Padding="16">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="כתובת תמונה מהאינטרנט (Image URL):"
+                           FontSize="13"
+                           FontAttributes="Bold"
+                           TextColor="#1E293B" />
+
+                    <Entry Placeholder="https://..."
+                           Text="{Binding ImageUrl}"
+                           FlowDirection="LeftToRight"
+                           TextColor="#0F172A" />
+
+                    <Label Text="בחירה מהירה של תמונת דמו תקינה מהמאגר:"
+                           FontSize="12"
+                           TextColor="#64748B" />
+
+                    <HorizontalStackLayout Spacing="8">
+                        <Button Text="קפטן אמריקה"
+                                Command="{Binding UsePresetHeroImageCommand}"
+                                CommandParameter="CaptainAmerica"
+                                BackgroundColor="#E0F2FE"
+                                TextColor="#0369A1"
+                                FontSize="12"
+                                CornerRadius="8" />
+                        <Button Text="וולברין"
+                                Command="{Binding UsePresetHeroImageCommand}"
+                                CommandParameter="Wolverine"
+                                BackgroundColor="#FEF3C7"
+                                TextColor="#B45309"
+                                FontSize="12"
+                                CornerRadius="8" />
+                        <Button Text="ת'ור"
+                                Command="{Binding UsePresetHeroImageCommand}"
+                                CommandParameter="Thor"
+                                BackgroundColor="#EDE9FE"
+                                TextColor="#6D28D9"
+                                FontSize="12"
+                                CornerRadius="8" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- בלוק 4: כפתורי שמירה וביטול + חיווי טעינה -->
+            <ActivityIndicator IsRunning="{Binding IsLoading}"
+                               IsVisible="{Binding IsLoading}"
+                               Color="#2563EB"
+                               HorizontalOptions="Center" />
+
+            <Label Text="{Binding StatusMessage}"
+                   IsVisible="{Binding HasStatusMessage}"
+                   TextColor="#DC2626"
+                   FontSize="13"
+                   HorizontalOptions="Center" />
+
+            <Grid ColumnDefinitions="*,*"
+                  ColumnSpacing="12">
+                <Button Grid.Column="0"
+                        Text="💾 שמור גיבור"
+                        Command="{Binding SaveHeroCommand}"
+                        BackgroundColor="#16A34A"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        CornerRadius="12"
+                        HeightRequest="48" />
+
+                <Button Grid.Column="1"
+                        Text="ביטול וחזרה"
+                        Command="{Binding CancelCommand}"
+                        BackgroundColor="#E2E8F0"
+                        TextColor="#1E293B"
+                        FontAttributes="Bold"
+                        CornerRadius="12"
+                        HeightRequest="48" />
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

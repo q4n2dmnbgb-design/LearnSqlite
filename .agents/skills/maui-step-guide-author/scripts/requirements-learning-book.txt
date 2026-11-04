@@ -1,0 +1,4 @@
+markdown-it-py>=3.0
+Pygments>=2.15
+playwright>=1.48
+PyMuPDF>=1.24

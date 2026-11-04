@@ -1,0 +1,23 @@
+{
+  "skill_name": "maui-step-guide-author",
+  "evals": [
+    {
+      "id": "new-project-build-along",
+      "prompt": "I am starting a MAUI homework app with no pages yet. Help my students build a learning book while we create a profile screen with save validation.",
+      "expected_output": "Select the new-project mode, propose a small student-approved roadmap, and start with one source-grounded chapter contract rather than dumping the project.",
+      "files": []
+    },
+    {
+      "id": "existing-project-roadmap",
+      "prompt": "Our MAUI app already has a Shell, a video list, SQLite services, and tests. We need a guided book that gets students to a filter-and-sort goal. Decide the right steps with us first.",
+      "expected_output": "Inspect and map the existing project, identify the current state and end goal, then ask the user to choose a milestone sequence before authoring chapters.",
+      "files": ["Learning/MAUI-Learning-Book.md", "ViewModels/MainViewModel.cs", "Services/IDatabaseService.cs"]
+    },
+    {
+      "id": "ui-replication-with-artifacts",
+      "prompt": "Create a step-by-step guide for this supplied dashboard design. We cannot capture an emulator, but the final learning book needs HTML snapshots and a PDF with no blank or clipped pages.",
+      "expected_output": "Create an HTML visual model with data-guide selectors, use the generic capture tool, label it as a model, and require the generated HTML/PDF validation report before publication.",
+      "files": []
+    }
+  ]
+}

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:LearnSqlite.Models"
+             xmlns:vm="clr-namespace:LearnSqlite.ViewModels"
+             x:Class="LearnSqlite.Views.HeroesListPage"
+             x:DataType="vm:HeroesListViewModel"
+             Title="{Binding Title}"
+             FlowDirection="RightToLeft"
+             BackgroundColor="#F1F5F9">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto"
+          Padding="16"
+          RowSpacing="12">
+
+        <!-- בלוק 1: באנר כותרת עליון וסיכום כמות הרשומות -->
+        <Border Grid.Row="0"
+                StrokeShape="RoundRectangle 16"
+                BackgroundColor="#1E3A8A"
+                StrokeThickness="0"
+                Padding="16">
+            <Grid ColumnDefinitions="*,Auto"
+                  ColumnSpacing="12">
+                <VerticalStackLayout Grid.Column="0"
+                                     Spacing="4">
+                    <Label Text="🦸 ארכיון גיבורי-העל"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="White" />
+                    <Label Text="{Binding SummaryText}"
+                           FontSize="13"
+                           TextColor="#BFDBFE" />
+                </VerticalStackLayout>
+
+                <Button Grid.Column="1"
+                        Text="+ גיבור חדש"
+                        Command="{Binding GoToAddHeroCommand}"
+                        BackgroundColor="#2563EB"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        CornerRadius="10"
+                        VerticalOptions="Center" />
+            </Grid>
+        </Border>
+
+        <!-- בלוק 2: סרגל חיפוש וסינון רשומות -->
+        <Border Grid.Row="1"
+                StrokeShape="RoundRectangle 12"
+                BackgroundColor="White"
+                Stroke="#CBD5E1"
+                StrokeThickness="1"
+                Padding="10">
+            <Grid ColumnDefinitions="*,Auto,Auto"
+                  ColumnSpacing="8">
+                <Entry Grid.Column="0"
+                       Placeholder="חפש לפי שם, זהות סודית או יקום (Marvel/DC)..."
+                       Text="{Binding SearchText}"
+                       TextColor="#0F172A"
+                       PlaceholderColor="#64748B" />
+
+                <Button Grid.Column="1"
+                        Text="חפש"
+                        Command="{Binding SearchHeroesCommand}"
+                        BackgroundColor="#0284C7"
+                        TextColor="White"
+                        CornerRadius="8" />
+
+                <Button Grid.Column="2"
+                        Text="נקה"
+                        Command="{Binding ClearSearchCommand}"
+                        BackgroundColor="#E2E8F0"
+                        TextColor="#1E293B"
+                        CornerRadius="8" />
+            </Grid>
+        </Border>
+
+        <!-- בלוק 3: רשימת גיבורי-העל (CollectionView) -->
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding Heroes}"
+                        SelectionMode="None">
+            <CollectionView.EmptyView>
+                <VerticalStackLayout VerticalOptions="Center"
+                                     HorizontalOptions="Center"
+                                     Spacing="8"
+                                     Padding="24">
+                    <Label Text="לא נמצאו גיבורי-על תואמים בארכיון."
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="#475569"
+                           HorizontalOptions="Center" />
+                    <Label Text="נסה לנקות את הסינון או להוסיף גיבור חדש."
+                           FontSize="13"
+                           TextColor="#64748B"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:HeroItem">
+                    <Border StrokeShape="RoundRectangle 14"
+                            BackgroundColor="White"
+                            Stroke="#E2E8F0"
+                            StrokeThickness="1"
+                            Padding="12"
+                            Margin="0,0,0,10">
+                        <Grid ColumnDefinitions="72,*,Auto"
+                              ColumnSpacing="12">
+
+                            <!-- תמונת הגיבור מהאינטרנט -->
+                            <Border Grid.Column="0"
+                                    StrokeShape="RoundRectangle 12"
+                                    StrokeThickness="0"
+                                    HeightRequest="72"
+                                    WidthRequest="72"
+                                    BackgroundColor="#E2E8F0">
+                                <Image Source="{Binding ImageUrl}"
+                                       Aspect="AspectFill"
+                                       HeightRequest="72"
+                                       WidthRequest="72" />
+                            </Border>
+
+                            <!-- פרטי הגיבור בכרטיס -->
+                            <VerticalStackLayout Grid.Column="1"
+                                                 Spacing="3"
+                                                 VerticalOptions="Center">
+                                <Label Text="{Binding Name}"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="#0F172A" />
+
+                                <Label Text="{Binding AlterEgo}"
+                                       FontSize="13"
+                                       TextColor="#475569" />
+
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label Text="{Binding Publisher}"
+                                           FontSize="12"
+                                           FontAttributes="Bold"
+                                           TextColor="#2563EB" />
+                                    <Label Text="{Binding PowerBadgeText}"
+                                           FontSize="12"
+                                           TextColor="#0D9488" />
+                                </HorizontalStackLayout>
+
+                                <Label Text="{Binding EliteStatusText}"
+                                       FontSize="11"
+                                       TextColor="#64748B" />
+                            </VerticalStackLayout>
+
+                            <!-- כפתור מעבר למסך פרטים ועריכה -->
+                            <Button Grid.Column="2"
+                                    Text="פרטים ⬅"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HeroesListViewModel}}, Path=OpenHeroDetailsCommand}"
+                                    CommandParameter="{Binding .}"
+                                    BackgroundColor="#EFF6FF"
+                                    TextColor="#1D4ED8"
+                                    FontAttributes="Bold"
+                                    CornerRadius="10"
+                                    VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- בלוק 4: חיווי טעינה והודעות שגיאה/סטטוס -->
+        <VerticalStackLayout Grid.Row="3"
+                             Spacing="6">
+            <ActivityIndicator IsRunning="{Binding IsLoading}"
+                               IsVisible="{Binding IsLoading}"
+                               Color="#2563EB"
+                               HorizontalOptions="Center" />
+
+            <Label Text="{Binding StatusMessage}"
+                   IsVisible="{Binding HasStatusMessage}"
+                   TextColor="#DC2626"
+                   FontSize="13"
+                   HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+    </Grid>
+</ContentPage>
