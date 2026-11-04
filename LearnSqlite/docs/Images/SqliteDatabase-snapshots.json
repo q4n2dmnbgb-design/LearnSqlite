@@ -1,0 +1,23 @@
+{
+  "screen": "SqliteDatabase",
+  "mockup": "C:\\Users\\Owner\\source\\repos\\LearnSqlite\\Learning\\Mockups\\SqliteDatabase.html",
+  "overview": "C:\\Users\\Owner\\source\\repos\\LearnSqlite\\Learning\\Images\\SqliteDatabase-overview.png",
+  "blocks": [
+    {
+      "name": "nuget-packages",
+      "path": "C:\\Users\\Owner\\source\\repos\\LearnSqlite\\Learning\\Images\\SqliteDatabase-block1-nuget-packages.png"
+    },
+    {
+      "name": "table-model",
+      "path": "C:\\Users\\Owner\\source\\repos\\LearnSqlite\\Learning\\Images\\SqliteDatabase-block2-table-model.png"
+    },
+    {
+      "name": "lazy-init-crud",
+      "path": "C:\\Users\\Owner\\source\\repos\\LearnSqlite\\Learning\\Images\\SqliteDatabase-block3-lazy-init-crud.png"
+    },
+    {
+      "name": "service-swap",
+      "path": "C:\\Users\\Owner\\source\\repos\\LearnSqlite\\Learning\\Images\\SqliteDatabase-block4-service-swap.png"
+    }
+  ]
+}

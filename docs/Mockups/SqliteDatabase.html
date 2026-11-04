@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SqliteHeroService Architecture Model</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #0f172a;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+    }
+    [data-guide-overview] {
+      width: 440px;
+      margin: auto;
+      padding: 16px;
+      border-radius: 28px;
+      background: #f1f5f9;
+      box-shadow: 0 18px 48px rgba(2, 6, 23, 0.75);
+      border: 4px solid #334155;
+    }
+    [data-guide-block] {
+      position: relative;
+      margin-bottom: 14px;
+      border: 2px dashed #0284c7;
+      border-radius: 16px;
+      padding: 6px;
+    }
+    [data-guide-block]::after {
+      content: "Block: " attr(data-guide-block);
+      position: absolute;
+      top: -10px;
+      left: 12px;
+      background: #0369a1;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      direction: ltr;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 14px;
+      border: 1px solid #cbd5e1;
+    }
+    .header-card {
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .header-card h2 {
+      margin: 0 0 6px 0;
+      font-size: 16px;
+    }
+    .header-card p {
+      margin: 0;
+      font-size: 12px;
+      color: #bae6fd;
+    }
+    .badge-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      direction: ltr;
+    }
+    .pkg-badge {
+      background: #1e293b;
+      border: 1px solid #38bdf8;
+      color: #e0f2fe;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 11px;
+      font-family: Consolas, monospace;
+      font-weight: 700;
+    }
+    .section-title {
+      margin: 0 0 8px 0;
+      font-size: 14px;
+      color: #0f172a;
+      font-weight: 700;
+    }
+    .code-pill {
+      direction: ltr;
+      text-align: left;
+      background: #0f172a;
+      color: #f8fafc;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-family: Consolas, monospace;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+    .attr { color: #38bdf8; font-weight: bold; }
+    .kw { color: #c084fc; }
+    .type { color: #4ade80; }
+    .flow-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .flow-step {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 8px;
+      font-size: 11px;
+      color: #1e293b;
+    }
+    .flow-step strong {
+      display: block;
+      color: #0369a1;
+      direction: ltr;
+      text-align: right;
+      margin-bottom: 3px;
+    }
+    .swap-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: #ecfdf5;
+      border: 1px solid #6ee7b7;
+      border-radius: 10px;
+      padding: 10px;
+      direction: ltr;
+      font-family: Consolas, monospace;
+      font-size: 11px;
+    }
+    .old-svc {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 6px 8px;
+      border-radius: 6px;
+      text-decoration: line-through;
+    }
+    .new-svc {
+      background: #dcfce7;
+      color: #166534;
+      padding: 6px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div data-guide-overview="SqliteDatabase">
+    <div data-guide-block="nuget-packages">
+      <div class="header-card">
+        <h2>שלב 1: חבילות ה-NuGet של SQLite ב-.NET MAUI</h2>
+        <p>שילוב ה-ORM הקליל יחד עם ספקי ה-C/C++ הטבעיים לכל הפלטפורמות</p>
+        <div class="badge-row">
+          <span class="pkg-badge">sqlite-net-pcl (1.9.172)</span>
+          <span class="pkg-badge">SQLitePCLRaw.bundle_green (2.1.11)</span>
+        </div>
+      </div>
+    </div>
+
+    <div data-guide-block="table-model">
+      <div class="card">
+        <div class="section-title">שלב 2: מיפוי HeroItem לטבלת SQLite באמצעות Attributes</div>
+        <div class="code-pill">
+          <div><span class="attr">[Table("Heroes")]</span></div>
+          <div><span class="kw">public class</span> <span class="type">HeroItem</span> {</div>
+          <div>&nbsp;&nbsp;<span class="attr">[PrimaryKey, AutoIncrement]</span></div>
+          <div>&nbsp;&nbsp;<span class="kw">public int</span> Id { <span class="kw">get</span>; <span class="kw">set</span>; }</div>
+          <div>&nbsp;&nbsp;<span class="attr">[MaxLength(100), NotNull]</span></div>
+          <div>&nbsp;&nbsp;<span class="kw">public string</span> Name { <span class="kw">get</span>; <span class="kw">set</span>; }</div>
+          <div>&nbsp;&nbsp;<span class="attr">[Ignore]</span> <span class="kw">public string</span> PowerBadgeText =&gt; ...</div>
+          <div>}</div>
+        </div>
+      </div>
+    </div>
+
+    <div data-guide-block="lazy-init-crud">
+      <div class="card">
+        <div class="section-title">שלב 3: SqliteHeroService — אתחול עצל (InitAsync) ופעולות CRUD</div>
+        <div class="code-pill">
+          FileSystem.AppDataDirectory + "HeroesArchive.db3"
+        </div>
+        <div class="flow-grid">
+          <div class="flow-step">
+            <strong>InitAsync() + Seed</strong>
+            יצירת הטבלה CreateTableAsync והזרעת 6 גיבורים אם הטבלה ריקה
+          </div>
+          <div class="flow-step">
+            <strong>Table&lt;HeroItem&gt;()</strong>
+            שליפה וחיפוש א-סינכרוניים עם OrderByDescending ו-Where
+          </div>
+          <div class="flow-step">
+            <strong>InsertAsync(hero)</strong>
+            הוספת רשומה חדשה וקבלת Id אוטומטי מ-SQLite
+          </div>
+          <div class="flow-step">
+            <strong>UpdateAsync / DeleteAsync</strong>
+            עדכון או מחיקה של רשומה קיימת לפי ה-PrimaryKey
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div data-guide-block="service-swap">
+      <div class="card">
+        <div class="section-title">שלב 4: החלפת השירות דרך הממשק IHeroService (אפס שינויים ב-ViewModel!)</div>
+        <div class="swap-box">
+          <span class="old-svc">new MockHeroService()</span>
+          <span>=== IHeroService ===&gt;</span>
+          <span class="new-svc">new SqliteHeroService()</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

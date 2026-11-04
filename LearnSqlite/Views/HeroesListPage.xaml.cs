@@ -11,8 +11,9 @@ public partial class HeroesListPage : ContentPage
     {
         InitializeComponent();
 
-        // בשלב הבסיס (ללא DI) אנו יוצרים את שירות ה-Mockup ומעבירים אותו ל-ViewModel
-        _viewModel = new HeroesListViewModel(new MockHeroService());
+        // בשלב ה-SQLite (ללא DI) אנו מחליפים את MockHeroService ב-SqliteHeroService בלבד!
+        // ה-ViewModel אינו משתנה כלל משום שהוא עובד מול הממשק IHeroService.
+        _viewModel = new HeroesListViewModel(new SqliteHeroService());
         BindingContext = _viewModel;
     }
 

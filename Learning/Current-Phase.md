@@ -1,16 +1,23 @@
 # Current Phase
 
-- **Feature:** בניית פרויקט הבסיס (ענף `master`) ללמידת SQLite ב-.NET MAUI — ארכיון גיבורי-העל (`LearnSqlite`)
-- **Phase number:** 1
-- **Phase title:** תשתית MVVM מלאה (3 מסכים ב-AppShell, ממשק שירות CRUD א-סינכרוני ומימוש Mockup בזיכרון ללא DI)
-- **Primary concept:** הפרדת שכבות (Model, Service Interface + Mockup, ViewModel, View) וניווט Shell רב-מסכי כהכנה להחלפת השירות ב-SQLite
+- **Feature:** ארכיון גיבורי-העל — מעבר מ-`MockHeroService` למסד נתונים מקומי `SQLite` (`SqliteHeroService`)
+- **Phase number:** 2
+- **Phase title:** חיבור מסד נתונים מקומי SQLite בענף `sqlite`
+- **Primary concept:** `sqlite-net-pcl`, `SQLitePCLRaw.bundle_green`, תכונות מיפוי `[Table]` / `[PrimaryKey, AutoIncrement]` / `[Ignore]`, אתחול א-סינכרוני עצל (`InitAsync`), והחלפת מימוש של `IHeroService` ללא שינוי ב-ViewModels
 - **Workflow stage:** VERIFICATION_AUDITOR
-- **Baton owner:** Instructor / Agent (Mode temporarily set to `MAXIMIZE CODE GENERATED` for teacher baseline build, then restored to `MAXIMIZE STUDENT CAPABILITY`)
-- **Student decisions so far:**
-  - נושא הפרויקט: ארכיון גיבורי-העל (`HeroItem`) עם תמונות חיות ותקינות ממאגר אינטרנטי (`Superhero API CDN`).
-  - 3 מסכים ב-`AppShell`: מסך צפייה באוסף (`HeroesListPage`), מסך הוספה (`AddHeroPage`), ומסך פרטי/עדכון/מחיקת רשומה (`HeroDetailsPage`).
-  - ארכיטקטורת MVVM לפי כללי ה-Guardrails, ללא DI בשלב זה, עם ממשק `IHeroService` המכיל את כל מתודות ה-CRUD הא-סינכרוניות ומימוש `MockHeroService`.
+- **Baton owner:** Agent (Teacher Mode -> Ready to switch back to Student Mode)
+- **Approved plan:**
+  1. יצירת תיקיית `docs` עם כל המדריכים וספר הלמידה.
+  2. פתיחת ענף חדש `sqlite` מתוך `master`.
+  3. הוספת חבילות `sqlite-net-pcl` ו-`SQLitePCLRaw.bundle_green` ל-`LearnSqlite.csproj`.
+  4. הוספת תכונות SQLite למודל `HeroItem.cs`.
+  5. מימוש `SqliteHeroService.cs` המממש את `IHeroService` כולל `InitAsync()` וזריעת נתוני פתיחה (Seeding).
+  6. חיבור `SqliteHeroService` בשלושת המסכים (`HeroesListPage`, `AddHeroPage`, `HeroDetailsPage`).
+  7. תיעוד שלב ה-SQLite במדריך שלב 4 (`04-SqliteDatabase-Guide.md`), הפקת ספר ה-PDF המעודכן, סנכרון תיקיית `docs`, והחזרת מצב העבודה ל-`MAXIMIZE STUDENT CAPABILITY`.
 - **Verification:**
-  - `dotnet build` עובר בהצלחה מלאה עם 0 אזהרות ו-0 שגיאות.
-  - כל סקריפטי האימות (`Validate-Maui-Version`, `Validate-Maui-ObsoleteApis`, `Validate-Maui-XamlResources`, `Validate-Learning-Book`) עוברים בסטטוס `PASS`.
+  - `dotnet build`
+  - `Validate-Maui-Version.ps1`
+  - `Validate-Maui-ObsoleteApis.ps1`
+  - `Validate-Maui-XamlResources.ps1`
+  - `Generate-Learning-Book-Pdf.py` + `MAUI-Learning-Book.validation.json`
 - **Status:** COMPLETE

@@ -8,7 +8,7 @@ public partial class AddHeroPage : ContentPage
     public AddHeroPage()
     {
         InitializeComponent();
-        BindingContext = new AddHeroViewModel(new MockHeroService());
+        BindingContext = new AddHeroViewModel(new SqliteHeroService());
     }
 }
 

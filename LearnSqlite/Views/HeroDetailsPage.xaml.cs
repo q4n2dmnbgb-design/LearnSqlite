@@ -8,7 +8,7 @@ public partial class HeroDetailsPage : ContentPage
     public HeroDetailsPage()
     {
         InitializeComponent();
-        BindingContext = new HeroDetailsViewModel(new MockHeroService());
+        BindingContext = new HeroDetailsViewModel(new SqliteHeroService());
     }
 }
 

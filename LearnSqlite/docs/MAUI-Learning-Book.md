@@ -202,3 +202,37 @@ public partial class AppShell : Shell
 1. **מדריך מסך 1 (`01-HeroesListPage-Guide.md`):** מסך הצפייה באוסף, חיפוש וניווט (`HeroesListPage` + `HeroesListViewModel`).
 2. **מדריך מסך 2 (`02-AddHeroPage-Guide.md`):** מסך הוספת גיבור חדש ואימות קלט (`AddHeroPage` + `AddHeroViewModel`).
 3. **מדריך מסך 3 (`03-HeroDetailsPage-Guide.md`):** מסך פרטי גיבור, קבלת `HeroId` בניווט, עדכון ומחיקה (`HeroDetailsPage` + `HeroDetailsViewModel`).
+4. **מדריך שלב 4 (`04-SqliteDatabase-Guide.md`):** חיבור מסד הנתונים המקומי SQLite (`SqliteHeroService`) בענף `sqlite`.
+
+---
+
+## 8. שלב ב' (ענף `sqlite`): מעבר מ-`MockHeroService` למסד נתונים מקומי `SQLite`
+
+לאחר שווידאנו שכל 3 המסכים וזרימת ה-MVVM פועלים כשורה בענף `master`, יצרנו את ענף `sqlite` וביצענו בו 4 צעדים ממוקדים:
+
+### 8.1 התקנת חבילות ה-NuGet של SQLite ב-`LearnSqlite.csproj`
+* **`sqlite-net-pcl` (גרסה `1.9.172`):** ספריית ה-ORM הקלילה המאפשרת מיפוי מחלקות C# לטבלאות SQLite וביצוע פעולות CRUD א-סינכרוניות באמצעות `SQLiteAsyncConnection`.
+* **`SQLitePCLRaw.bundle_green` (גרסה `2.1.11`):** חבילת הספקים הטבעיים (Native C/C++ binaries) הנדרשת להרצת מנוע SQLite על גבי Android, Windows, iOS ו-MacCatalyst.
+
+### 8.2 עיטור המודל `HeroItem` בתכונות מיפוי לטבלה (Attributes)
+במחלקה `LearnSqlite/Models/HeroItem.cs` הוספנו את תכונות ה-ORM של `SQLite`:
+* `[Table("Heroes")]` — מגדיר את שם הטבלה במסד הנתונים.
+* `[PrimaryKey, AutoIncrement]` מעל `Id` — קובע מפתח ראשי עם מספור אוטומטי ב-SQLite.
+* `[MaxLength(100), NotNull]` מעל `Name` — מגדיר אילוץ שדה חובה ואורך מקסימלי.
+* `[Ignore]` מעל `PowerBadgeText` ו-`EliteStatusText` — מונע יצירת עמודות בטבלה עבור מאפייני עזר מחושבים לתצוגה.
+
+### 8.3 מימוש `SqliteHeroService` עם אתחול עצל (`InitAsync`) וזריעת נתונים (Seeding)
+במחלקה `LearnSqlite/Services/SqliteHeroService.cs` מימשנו את החוזה `IHeroService` מול הקובץ המקומי `Path.Combine(FileSystem.AppDataDirectory, "HeroesArchive.db3")`:
+* **בנאי נקי:** בהתאם לכללי ה-Guardrails של .NET MAUI, הבנאי `SqliteHeroService()` אינו מבצע פעולות קובץ או מסד נתונים.
+* **אתחול א-סינכרוני עצל (`InitAsync`):** נקרא בתחילת כל פעולת CRUD, מוגן על ידי `SemaphoreSlim`, יוצר את הטבלה (`CreateTableAsync<HeroItem>()`) ובפעם הראשונה שבה הטבלה ריקה (`CountAsync() == 0`) זורע אוטומטית את 6 גיבורי-העל ההתחלתיים באמצעות `InsertAllAsync`.
+* **פעולות ה-CRUD:**
+  * `GetAllHeroesAsync()` -> `Table<HeroItem>().OrderByDescending(h => h.PowerLevel).ToListAsync()`
+  * `GetHeroByIdAsync(int id)` -> `Table<HeroItem>().Where(h => h.Id == id).FirstOrDefaultAsync()`
+  * `SearchHeroesAsync(string searchText)` -> סינון א-סינכרוני לפי שם, זהות סודית או יקום קומיקס
+  * `AddHeroAsync(HeroItem hero)` -> `InsertAsync(hero)`
+  * `UpdateHeroAsync(HeroItem hero)` -> `UpdateAsync(hero)`
+  * `DeleteHeroAsync(int id)` -> `DeleteAsync<HeroItem>(id)`
+
+### 8.4 החלפת השירות ב-Views ללא שינוי ב-ViewModels או ב-XAML
+בזכות העובדה שכל שלושת ה-ViewModels תלויים בממשק `IHeroService` בלבד, המעבר מנתוני דמה בזיכרון למסד נתונים SQLite דרש החלפה של שם המחלקה בלבד ב-Code-Behind של שלושת המסכים (`new SqliteHeroService()` במקום `new MockHeroService()`), ללא שינוי של אף שורת קוד ב-ViewModels או ב-XAML!
+
