@@ -288,3 +288,4 @@ public async Task DeleteHeroAsync()
 
 ## מקורות
 - תיעוד רשמי של Microsoft Learn עבור `IQueryAttributable` ב-.NET MAUI Shell.
+

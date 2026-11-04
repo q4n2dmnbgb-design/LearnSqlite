@@ -235,9 +235,9 @@ private void ApplyPresetHeroImage(string? presetKey)
 {
     ImageUrl = presetKey switch
     {
-        "Wolverine" => "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/md/717-wolverine.jpg",
-        "Thor" => "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/md/659-thor.jpg",
-        _ => "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/md/149-captain-america.jpg"
+        "Wolverine" => "https://raw.githubusercontent.com/akabab/superhero-api/0.3.0/api/images/md/717-wolverine.jpg",
+        "Thor" => "https://raw.githubusercontent.com/akabab/superhero-api/0.3.0/api/images/md/659-thor.jpg",
+        _ => "https://raw.githubusercontent.com/akabab/superhero-api/0.3.0/api/images/md/149-captain-america.jpg"
     };
 }
 ```
@@ -349,3 +349,4 @@ public async Task SaveHeroAsync()
 
 ## מקורות
 - תיעוד רשמי של Microsoft Learn עבור `.NET MAUI Commanding` ו-`Data Binding`.
+

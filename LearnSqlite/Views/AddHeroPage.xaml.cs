@@ -11,3 +11,4 @@ public partial class AddHeroPage : ContentPage
         BindingContext = new AddHeroViewModel(new MockHeroService());
     }
 }
+

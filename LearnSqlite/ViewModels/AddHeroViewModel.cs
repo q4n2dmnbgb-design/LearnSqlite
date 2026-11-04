@@ -17,7 +17,7 @@ public class AddHeroViewModel : BaseViewModel
     private string _publisher = "Marvel";
     private int _powerLevel = 80;
     private bool _isEliteMember = true;
-    private string _imageUrl = "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/md/149-captain-america.jpg";
+    private string _imageUrl = "https://raw.githubusercontent.com/akabab/superhero-api/0.3.0/api/images/md/149-captain-america.jpg";
 
     public List<string> AvailablePublishers { get; } = new() { "Marvel", "DC", "Independent" };
 
@@ -155,10 +155,10 @@ public class AddHeroViewModel : BaseViewModel
     {
         ImageUrl = presetKey switch
         {
-            "Wolverine" => "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/md/717-wolverine.jpg",
-            "Thor" => "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/md/659-thor.jpg",
-            "GreenLantern" => "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/md/306-hal-jordan.jpg",
-            _ => "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/md/149-captain-america.jpg"
+            "Wolverine" => "https://raw.githubusercontent.com/akabab/superhero-api/0.3.0/api/images/md/717-wolverine.jpg",
+            "Thor" => "https://raw.githubusercontent.com/akabab/superhero-api/0.3.0/api/images/md/659-thor.jpg",
+            "GreenLantern" => "https://raw.githubusercontent.com/akabab/superhero-api/0.3.0/api/images/md/306-hal-jordan.jpg",
+            _ => "https://raw.githubusercontent.com/akabab/superhero-api/0.3.0/api/images/md/149-captain-america.jpg"
         };
     }
 
@@ -219,3 +219,4 @@ public class AddHeroViewModel : BaseViewModel
         }
     }
 }
+

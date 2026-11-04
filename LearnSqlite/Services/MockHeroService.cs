@@ -22,7 +22,7 @@ public class MockHeroService : IHeroService
             Publisher = "DC",
             PowerLevel = 88,
             IsEliteMember = true,
-            ImageUrl = "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/md/70-batman.jpg"
+            ImageUrl = "https://raw.githubusercontent.com/akabab/superhero-api/0.3.0/api/images/md/70-batman.jpg"
         },
         new HeroItem
         {
@@ -32,7 +32,7 @@ public class MockHeroService : IHeroService
             Publisher = "Marvel",
             PowerLevel = 85,
             IsEliteMember = true,
-            ImageUrl = "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/md/620-spider-man.jpg"
+            ImageUrl = "https://raw.githubusercontent.com/akabab/superhero-api/0.3.0/api/images/md/620-spider-man.jpg"
         },
         new HeroItem
         {
@@ -42,7 +42,7 @@ public class MockHeroService : IHeroService
             Publisher = "Marvel",
             PowerLevel = 92,
             IsEliteMember = true,
-            ImageUrl = "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/md/346-iron-man.jpg"
+            ImageUrl = "https://raw.githubusercontent.com/akabab/superhero-api/0.3.0/api/images/md/346-iron-man.jpg"
         },
         new HeroItem
         {
@@ -52,7 +52,7 @@ public class MockHeroService : IHeroService
             Publisher = "DC",
             PowerLevel = 95,
             IsEliteMember = true,
-            ImageUrl = "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/md/720-wonder-woman.jpg"
+            ImageUrl = "https://raw.githubusercontent.com/akabab/superhero-api/0.3.0/api/images/md/720-wonder-woman.jpg"
         },
         new HeroItem
         {
@@ -62,7 +62,7 @@ public class MockHeroService : IHeroService
             Publisher = "DC",
             PowerLevel = 99,
             IsEliteMember = true,
-            ImageUrl = "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/md/644-superman.jpg"
+            ImageUrl = "https://raw.githubusercontent.com/akabab/superhero-api/0.3.0/api/images/md/644-superman.jpg"
         },
         new HeroItem
         {
@@ -72,7 +72,7 @@ public class MockHeroService : IHeroService
             Publisher = "DC",
             PowerLevel = 90,
             IsEliteMember = false,
-            ImageUrl = "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/md/263-flash.jpg"
+            ImageUrl = "https://raw.githubusercontent.com/akabab/superhero-api/0.3.0/api/images/md/263-flash.jpg"
         }
     };
 
@@ -166,3 +166,4 @@ public class MockHeroService : IHeroService
         };
     }
 }
+

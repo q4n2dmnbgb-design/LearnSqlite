@@ -121,7 +121,7 @@ public class MockHeroService : IHeroService
             Publisher = "DC",
             PowerLevel = 88,
             IsEliteMember = true,
-            ImageUrl = "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/md/70-batman.jpg"
+            ImageUrl = "https://raw.githubusercontent.com/akabab/superhero-api/0.3.0/api/images/md/70-batman.jpg"
         },
         // ... 5 גיבורים נוספים עם כתובות תמונה מאומתות
     };

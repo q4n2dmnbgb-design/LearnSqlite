@@ -340,3 +340,4 @@ protected override async void OnAppearing()
 
 ## מקורות
 - תיעוד רשמי של Microsoft Learn עבור `.NET MAUI Shell Navigation` ו-`CollectionView`.
+

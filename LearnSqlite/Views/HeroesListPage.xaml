@@ -112,11 +112,13 @@
                                     StrokeThickness="0"
                                     HeightRequest="72"
                                     WidthRequest="72"
+                                    FlowDirection="LeftToRight"
                                     BackgroundColor="#E2E8F0">
                                 <Image Source="{Binding ImageUrl}"
                                        Aspect="AspectFill"
                                        HeightRequest="72"
-                                       WidthRequest="72" />
+                                       WidthRequest="72"
+                                       FlowDirection="LeftToRight" />
                             </Border>
 
                             <!-- פרטי הגיבור בכרטיס -->
@@ -180,3 +182,4 @@
 
     </Grid>
 </ContentPage>
+

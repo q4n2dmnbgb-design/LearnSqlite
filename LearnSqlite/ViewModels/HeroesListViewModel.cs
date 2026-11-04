@@ -158,3 +158,4 @@ public class HeroesListViewModel : BaseViewModel
         await Shell.Current.GoToAsync(nameof(HeroDetailsPage), navigationParams);
     }
 }
+

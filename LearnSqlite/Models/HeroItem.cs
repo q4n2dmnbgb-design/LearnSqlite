@@ -52,3 +52,4 @@ public class HeroItem
     /// </summary>
     public string EliteStatusText => IsEliteMember ? "⭐ חבר צוות עלית" : "🛡️ פועל עצמאית";
 }
+

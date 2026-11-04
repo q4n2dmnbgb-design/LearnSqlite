@@ -22,3 +22,4 @@ public partial class HeroesListPage : ContentPage
         await _viewModel.LoadHeroesAsync();
     }
 }
+

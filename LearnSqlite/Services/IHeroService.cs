@@ -42,3 +42,4 @@ public interface IHeroService
     /// </summary>
     Task<int> DeleteHeroAsync(int id);
 }
+

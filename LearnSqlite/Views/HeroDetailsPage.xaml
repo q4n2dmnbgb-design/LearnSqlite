@@ -25,11 +25,13 @@
                             StrokeThickness="2"
                             HeightRequest="96"
                             WidthRequest="96"
+                            FlowDirection="LeftToRight"
                             BackgroundColor="#1E293B">
                         <Image Source="{Binding ImageUrl}"
                                Aspect="AspectFill"
                                HeightRequest="96"
-                               WidthRequest="96" />
+                               WidthRequest="96"
+                               FlowDirection="LeftToRight" />
                     </Border>
 
                     <VerticalStackLayout Grid.Column="1"
@@ -161,3 +163,4 @@
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
+

@@ -11,3 +11,4 @@ public partial class HeroDetailsPage : ContentPage
         BindingContext = new HeroDetailsViewModel(new MockHeroService());
     }
 }
+
