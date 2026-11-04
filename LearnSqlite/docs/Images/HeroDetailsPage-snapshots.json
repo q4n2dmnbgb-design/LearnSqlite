@@ -1,0 +1,19 @@
+{
+  "screen": "HeroDetailsPage",
+  "mockup": "C:\\Users\\Owner\\source\\repos\\LearnSqlite\\Learning\\Mockups\\HeroDetailsPage.html",
+  "overview": "C:\\Users\\Owner\\source\\repos\\LearnSqlite\\Learning\\Images\\HeroDetailsPage-overview.png",
+  "blocks": [
+    {
+      "name": "identity-header",
+      "path": "C:\\Users\\Owner\\source\\repos\\LearnSqlite\\Learning\\Images\\HeroDetailsPage-block1-identity-header.png"
+    },
+    {
+      "name": "edit-fields",
+      "path": "C:\\Users\\Owner\\source\\repos\\LearnSqlite\\Learning\\Images\\HeroDetailsPage-block2-edit-fields.png"
+    },
+    {
+      "name": "update-delete-actions",
+      "path": "C:\\Users\\Owner\\source\\repos\\LearnSqlite\\Learning\\Images\\HeroDetailsPage-block3-update-delete-actions.png"
+    }
+  ]
+}

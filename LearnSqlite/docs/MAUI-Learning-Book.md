@@ -1,0 +1,204 @@
+# ספר הלמידה וההדרכה: LearnSqlite — מארכיטקטורת MVVM ועד מסד נתונים SQLite
+
+ברוכים הבאים לספר הלמידה המלווה את פרויקט **LearnSqlite** ב-.NET MAUI!
+מטרת הפרויקט היא להוביל תלמידים צעד-אחר-צעד מבניית אפליקציית **MVVM** תלת-מסכית נקייה העובדת מול נתוני דמה בזיכרון (**Mockup Service** בענף `master`), ועד להטמעת מסד נתונים מקומי אמיתי מבוסס **SQLite** בענף ההמשך — מבלי לשבור את קוד המסכים או ה-ViewModels.
+
+---
+
+## 1. מפת הדרכים הפדגוגית של הפרויקט (Project Roadmap)
+
+הפרויקט בנוי בשני שלבים מרכזיים (ענפי Git נפרדים), כך שהתלמיד חווה בעצמו את הכוח האמיתי של הפרדת שכבות וממשקים (`Interfaces`):
+
+| שלב / ענף | תוצאה נראית לעין | קבצים מרכזיים | מושג מפתח |
+| --- | --- | --- | --- |
+| **שלב א' (`master`)** | אפליקציית 3 מסכים פעילה עם CRUD מלא בזיכרון | `HeroItem`, `IHeroService`, `MockHeroService`, 3 `ViewModels`, 3 `Views` | הפרדת שכבות, `INotifyPropertyChanged`, `ICommand`, ניווט `AppShell` |
+| **שלב ב' (`sqlite`)** | שמירה קבועה בקובץ מסד נתונים מקומי במכשיר | `SqliteHeroService`, תכונות `[PrimaryKey]` במודל | `SQLiteAsyncConnection`, מיפוי ORM, החלפת שירות שקופה |
+
+> [!IMPORTANT]
+> ### למה מתחילים עם `MockHeroService` לפני שמתקינים SQLite?
+> כאשר מפרידים בין **ממשק השירות (`IHeroService`)** לבין **המימוש שלו (`MockHeroService`)**, התלמיד בונה ובודק את כל מסכי האפליקציה, הטפסים, הפקודות והניווט בסביבה פשוטה ומהירה. לאחר שהאפליקציה עובדת ב-100%, המעבר ל-SQLite מתמקד אך ורק בשכבת הנתונים!
+
+---
+
+## 2. ארכיטקטורת השכבות בפרויקט הבסיס (`master`)
+
+פרויקט הבסיס בנוי בארכיטקטורת **MVVM** מוקפדת, ללא הזרקת תלויות (DI) בשלב זה, כדי לשמור על שקיפות מלאה של זרימת האובייקטים עבור התלמיד:
+
+```text
+LearnSqlite/
+├── Models/
+│   └── HeroItem.cs                # מודל הנתונים (POCO) של גיבור-על
+├── Services/
+│   ├── IHeroService.cs            # חוזה א-סינכרוני לכל פעולות ה-CRUD
+│   └── MockHeroService.cs         # מימוש בזיכרון עם 6 גיבורי-על ותמונות חיות
+├── ViewModels/
+│   ├── BaseViewModel.cs           # מימוש INotifyPropertyChanged ומצב טעינה
+│   ├── HeroesListViewModel.cs     # לוגיקת מסך האוסף, חיפוש וניווט
+│   ├── AddHeroViewModel.cs        # לוגיקת מסך הוספת גיבור ואימות טופס
+│   └── HeroDetailsViewModel.cs    # לוגיקת מסך פרטים, עדכון ומחיקה (IQueryAttributable)
+├── Views/
+│   ├── HeroesListPage.xaml(.cs)   # מסך 1: צפייה באוסף וחיפוש
+│   ├── AddHeroPage.xaml(.cs)      # מסך 2: טופס הוספת רשומה חדשה
+│   └── HeroDetailsPage.xaml(.cs)  # מסך 3: צפייה בפרטי רשומה, עדכון ומחיקה
+└── AppShell.xaml(.cs)             # ניהול מעטפת האפליקציה ורישום נתיבי ניווט (Routes)
+```
+
+---
+
+## 3. צעד 1: מודל הנתונים — `Models/HeroItem.cs`
+
+### מטרת הקובץ ומקומו בארכיטקטורה
+המודל מייצג רשומה בודדת של גיבור-על בארכיון. בחרנו במודל עשיר הכולל טיפוסי נתונים מגוונים (`int`, `string`, `bool`) כדי להכין את הקרקע למיפוי עמודות בטבלת SQLite בהמשך. כל תמונות הגיבורים נטענות מכתובות URL מאומתות ברשת (מתוך מאגר ה-CDN הציבורי `akabab/superhero-api`).
+
+```csharp
+namespace LearnSqlite.Models;
+
+public class HeroItem
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string AlterEgo { get; set; } = string.Empty;
+    public string Publisher { get; set; } = "Marvel";
+    public int PowerLevel { get; set; } = 75;
+    public bool IsEliteMember { get; set; }
+    public string ImageUrl { get; set; } = string.Empty;
+
+    // מאפייני עזר לקריאה בלבד עבור תצוגה נקייה ב-XAML
+    public string PowerBadgeText => $"⚡ עוצמה: {PowerLevel}/100";
+    public string EliteStatusText => IsEliteMember ? "⭐ חבר צוות עלית" : "🛡️ פועל עצמאית";
+}
+```
+
+| שם המאפיין | טיפוס ב-C# | תפקיד עתידי ב-SQLite |
+| --- | --- | --- |
+| `Id` | `int` | מפתח ראשי מספור אוטומטי (`[PrimaryKey, AutoIncrement]`) |
+| `Name` / `AlterEgo` | `string` | עמודות טקסט (`TEXT`) לחיפוש וסינון |
+| `Publisher` | `string` | עמודת קטגוריה (`Marvel` / `DC` / `Independent`) |
+| `PowerLevel` | `int` | עמודת מספר שלם (`INTEGER`) בטווח 1–100 |
+| `IsEliteMember` | `bool` | עמודה בוליאנית (`0` או `1` ב-SQLite) |
+| `ImageUrl` | `string` | כתובת URL לתמונת הגיבור המוצגת בפקד `Image` |
+
+---
+
+## 4. צעד 2: חוזה ה-CRUD ומימוש ה-Mockup — `Services/`
+
+### 4.1 ממשק השירות: `Services/IHeroService.cs`
+כל פעולות השירות מוגדרות כא-סינכרוניות (`Task`) ומקבילות בדיוק לפעולות מסד הנתונים שנממש בהמשך עם `SQLiteAsyncConnection`:
+
+```csharp
+using LearnSqlite.Models;
+
+namespace LearnSqlite.Services;
+
+public interface IHeroService
+{
+    Task<List<HeroItem>> GetAllHeroesAsync();
+    Task<HeroItem?> GetHeroByIdAsync(int id);
+    Task<List<HeroItem>> SearchHeroesAsync(string searchText);
+    Task<int> AddHeroAsync(HeroItem hero);
+    Task<int> UpdateHeroAsync(HeroItem hero);
+    Task<int> DeleteHeroAsync(int id);
+}
+```
+
+> [!TIP]
+> ### 💡 מדוע `AddHeroAsync`, `UpdateHeroAsync` ו-`DeleteHeroAsync` מחזירות `Task<int>`?
+> בספריית `sqlite-net-pcl`, מתודות ה-CRUD (`InsertAsync`, `UpdateAsync`, `DeleteAsync`) מחזירות `Task<int>` המייצג את **מספר השורות שהושפעו בטבלה** (`Rows Affected`). הגדרת החתימה הזו כבר בממשק ה-Mockup מבטיחה תאימות של 100% במעבר ל-SQLite!
+
+### 4.2 מימוש הדמה בזיכרון: `Services/MockHeroService.cs`
+כיוון שבשלב זה איננו משתמשים ב-Dependency Injection (DI), כל מסך יוצר מופע של `new MockHeroService()`. כדי שכל 3 המסכים יקראו ויעדכנו את **אותו אוסף רשומות**, הרשימה `_heroes` והמונה `_nextId` מוגדרים כ-`static`:
+
+```csharp
+public class MockHeroService : IHeroService
+{
+    private static readonly List<HeroItem> _heroes = new()
+    {
+        new HeroItem
+        {
+            Id = 1,
+            Name = "באטמן (Batman)",
+            AlterEgo = "ברוס ויין",
+            Publisher = "DC",
+            PowerLevel = 88,
+            IsEliteMember = true,
+            ImageUrl = "https://raw.githubusercontent.com/akabab/superhero-api/0.3.0/api/images/md/70-batman.jpg"
+        },
+        // ... 5 גיבורים נוספים עם כתובות תמונה מאומתות
+    };
+
+    private static int _nextId = 7;
+
+    public async Task<int> AddHeroAsync(HeroItem hero)
+    {
+        await Task.Delay(150);
+        var copy = CloneHero(hero);
+        copy.Id = _nextId++;
+        _heroes.Add(copy);
+        hero.Id = copy.Id;
+        return 1;
+    }
+}
+```
+
+> [!NOTE]
+> ### מדוע אנו מבצעים `CloneHero` בשליפה ובשמירה?
+> במסד נתונים אמיתי (כמו SQLite), כאשר שולפים רשומה למסך העריכה ומשנים שדה ב-ViewModel, הרשומה בטבלה **אינה משתנה** עד שלוחצים על כפתור "עדכן רשומה" (`UpdateHeroAsync`). שכפול האובייקט (`CloneHero`) ב-`MockHeroService` מחקה בדיוק את ההתנהגות של מסד נתונים אמיתי, כך שאם המשתמש משנה טקסט ולוחץ "חזרה ללא שמירה", הנתון המקורי ברשימה לא נפגע!
+
+---
+
+## 5. צעד 3: מחלקת הבסיס `ViewModels/BaseViewModel.cs`
+
+מחלקת `BaseViewModel` מממשת את `INotifyPropertyChanged` עם מאפיינים מפורשים (`get`/`set` מלאים ללא קיצורים חבויים) ומספקת ניהול אחיד של:
+- `IsLoading` ו-`IsNotLoading` (עבור פקד `ActivityIndicator` ותנאי `CanExecute`).
+- `Title` (כותרת המסך).
+- `StatusMessage`, `HasStatusMessage` ו-`HasError` (להצגת משוב ושגיאות למשתמש).
+- מתודה וירטואלית `OnLoadingStateChanged()` המאפשרת לכל ViewModel יורש לרענן אוטומטית את ה-`CanExecute` של הפקודות שלו ברגע שמתחילה או מסתיימת טעינה.
+
+```csharp
+public bool IsLoading
+{
+    get => _isLoading;
+    set
+    {
+        if (_isLoading != value)
+        {
+            _isLoading = value;
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(IsNotLoading));
+            OnLoadingStateChanged();
+        }
+    }
+}
+```
+
+---
+
+## 6. צעד 4: ניווט רב-מסכי באמצעות `AppShell`
+
+האפליקציה כוללת 3 מסכים המנוהלים על ידי `AppShell`:
+1. **`HeroesListPage` (מסך הבית הראשי):** מוגדר כ-`ShellContent` בתוך `AppShell.xaml` עם `FlowDirection="RightToLeft"`.
+2. **`AddHeroPage` (מסך הוספה):** נרשם כנתיב ניווט (`Routing.RegisterRoute`) ב-`AppShell.xaml.cs`.
+3. **`HeroDetailsPage` (מסך פרטי/עדכון רשומה):** נרשם כנתיב ניווט ב-`AppShell.xaml.cs` ומקבל את מזהה הרשומה (`HeroId`) באמצעות `Dictionary<string, object>` והממשק `IQueryAttributable`.
+
+```csharp
+public partial class AppShell : Shell
+{
+    public AppShell()
+    {
+        InitializeComponent();
+
+        Routing.RegisterRoute(nameof(AddHeroPage), typeof(AddHeroPage));
+        Routing.RegisterRoute(nameof(HeroDetailsPage), typeof(HeroDetailsPage));
+    }
+}
+```
+
+---
+
+## 7. אינדקס מדריכי המסכים (שיטת הבלוקים המודולרית)
+
+בהמשך ספר זה מופיעים 3 מדריכי פיתוח מפורטים (פרק לכל מסך), הכוללים הדמיות חזותיות, חלוקה לבלוקים ב-XAML וב-ViewModel, ונקודות בקרה לתלמיד:
+
+1. **מדריך מסך 1 (`01-HeroesListPage-Guide.md`):** מסך הצפייה באוסף, חיפוש וניווט (`HeroesListPage` + `HeroesListViewModel`).
+2. **מדריך מסך 2 (`02-AddHeroPage-Guide.md`):** מסך הוספת גיבור חדש ואימות קלט (`AddHeroPage` + `AddHeroViewModel`).
+3. **מדריך מסך 3 (`03-HeroDetailsPage-Guide.md`):** מסך פרטי גיבור, קבלת `HeroId` בניווט, עדכון ומחיקה (`HeroDetailsPage` + `HeroDetailsViewModel`).

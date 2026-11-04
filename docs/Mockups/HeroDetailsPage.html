@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HeroDetailsPage Visual Model</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #0f172a;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+    }
+    [data-guide-overview] {
+      width: 390px;
+      margin: auto;
+      padding: 14px;
+      border-radius: 28px;
+      background: #f1f5f9;
+      box-shadow: 0 18px 48px rgba(2, 6, 23, 0.75);
+      border: 4px solid #334155;
+    }
+    [data-guide-block] {
+      position: relative;
+      margin-bottom: 12px;
+      border: 2px dashed #6366f1;
+      border-radius: 16px;
+      padding: 4px;
+    }
+    [data-guide-block]::after {
+      content: "Block: " attr(data-guide-block);
+      position: absolute;
+      top: -10px;
+      left: 12px;
+      background: #4f46e5;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      direction: ltr;
+    }
+    .details-banner {
+      background: #0f172a;
+      color: white;
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .details-img {
+      width: 84px;
+      height: 84px;
+      border-radius: 12px;
+      border: 2px solid #38bdf8;
+      object-fit: cover;
+    }
+    .details-banner h1 {
+      margin: 0 0 4px 0;
+      font-size: 18px;
+    }
+    .details-banner p {
+      margin: 0 0 4px 0;
+      font-size: 13px;
+      color: #cbd5e1;
+    }
+    .pk-badge {
+      font-size: 11px;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+    .card {
+      background: white;
+      border: 1px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .field-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 4px;
+      display: block;
+    }
+    .field-input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 12px;
+      margin-bottom: 10px;
+      background: #f8fafc;
+      color: #0f172a;
+    }
+    .power-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #0d9488;
+      margin-bottom: 6px;
+    }
+    .slider-bar {
+      height: 6px;
+      background: #0d9488;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      width: 88%;
+    }
+    .switch-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #1e293b;
+      margin-bottom: 10px;
+    }
+    .switch-pill {
+      width: 40px;
+      height: 22px;
+      background: #2563eb;
+      border-radius: 999px;
+    }
+    .crud-actions {
+      background: white;
+      padding: 10px;
+      border-radius: 12px;
+    }
+    .actions-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .btn-update {
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 11px;
+      font-weight: 700;
+      font-size: 13px;
+    }
+    .btn-delete {
+      background: #dc2626;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 11px;
+      font-weight: 700;
+      font-size: 13px;
+    }
+    .btn-back {
+      width: 100%;
+      background: #e2e8f0;
+      color: #1e293b;
+      border: none;
+      border-radius: 10px;
+      padding: 10px;
+      font-weight: 700;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <main data-guide-overview>
+    <section data-guide-block="identity-header">
+      <div class="details-banner">
+        <img class="details-img" src="https://raw.githubusercontent.com/akabab/superhero-api/0.3.0/api/images/md/70-batman.jpg" alt="Batman">
+        <div>
+          <h1>באטמן (Batman)</h1>
+          <p>ברוס ויין</p>
+          <div class="pk-badge">מזהה רשומה (Primary Key): #1</div>
+        </div>
+      </div>
+    </section>
+
+    <section data-guide-block="edit-fields">
+      <div class="card">
+        <label class="field-label">שם גיבור-העל:</label>
+        <div class="field-input">באטמן (Batman)</div>
+
+        <label class="field-label">זהות סודית / שם אמיתי:</label>
+        <div class="field-input">ברוס ויין</div>
+
+        <label class="field-label">יקום / הוצאה לאור:</label>
+        <div class="field-input">DC ▾</div>
+
+        <div class="power-label">דירוג עוצמה: 88/100</div>
+        <div class="slider-bar"></div>
+
+        <div class="switch-row">
+          <span>חבר בצוות עלית (הנוקמים / ליגת הצדק)</span>
+          <div class="switch-pill"></div>
+        </div>
+
+        <label class="field-label">כתובת תמונה מהאינטרנט (Image URL):</label>
+        <div class="field-input" dir="ltr">https://raw.githubusercontent.com/akabab/superhero-api/0.3.0/api/images/md/70-batman.jpg</div>
+      </div>
+    </section>
+
+    <section data-guide-block="update-delete-actions">
+      <div class="crud-actions">
+        <div class="actions-row">
+          <button class="btn-update" type="button">💾 עדכן רשומה</button>
+          <button class="btn-delete" type="button">🗑️ מחק רשומה</button>
+        </div>
+        <button class="btn-back" type="button">⬅ חזרה לארכיון ללא שמירה</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
+

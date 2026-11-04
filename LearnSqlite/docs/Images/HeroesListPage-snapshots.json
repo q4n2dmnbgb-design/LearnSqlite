@@ -1,0 +1,23 @@
+{
+  "screen": "HeroesListPage",
+  "mockup": "C:\\Users\\Owner\\source\\repos\\LearnSqlite\\Learning\\Mockups\\HeroesListPage.html",
+  "overview": "C:\\Users\\Owner\\source\\repos\\LearnSqlite\\Learning\\Images\\HeroesListPage-overview.png",
+  "blocks": [
+    {
+      "name": "header-banner",
+      "path": "C:\\Users\\Owner\\source\\repos\\LearnSqlite\\Learning\\Images\\HeroesListPage-block1-header-banner.png"
+    },
+    {
+      "name": "search-filter",
+      "path": "C:\\Users\\Owner\\source\\repos\\LearnSqlite\\Learning\\Images\\HeroesListPage-block2-search-filter.png"
+    },
+    {
+      "name": "collection-list",
+      "path": "C:\\Users\\Owner\\source\\repos\\LearnSqlite\\Learning\\Images\\HeroesListPage-block3-collection-list.png"
+    },
+    {
+      "name": "status-feedback",
+      "path": "C:\\Users\\Owner\\source\\repos\\LearnSqlite\\Learning\\Images\\HeroesListPage-block4-status-feedback.png"
+    }
+  ]
+}

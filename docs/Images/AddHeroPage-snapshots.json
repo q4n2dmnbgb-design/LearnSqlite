@@ -1,0 +1,23 @@
+{
+  "screen": "AddHeroPage",
+  "mockup": "C:\\Users\\Owner\\source\\repos\\LearnSqlite\\Learning\\Mockups\\AddHeroPage.html",
+  "overview": "C:\\Users\\Owner\\source\\repos\\LearnSqlite\\Learning\\Images\\AddHeroPage-overview.png",
+  "blocks": [
+    {
+      "name": "preview-banner",
+      "path": "C:\\Users\\Owner\\source\\repos\\LearnSqlite\\Learning\\Images\\AddHeroPage-block1-preview-banner.png"
+    },
+    {
+      "name": "hero-form",
+      "path": "C:\\Users\\Owner\\source\\repos\\LearnSqlite\\Learning\\Images\\AddHeroPage-block2-hero-form.png"
+    },
+    {
+      "name": "image-url-picker",
+      "path": "C:\\Users\\Owner\\source\\repos\\LearnSqlite\\Learning\\Images\\AddHeroPage-block3-image-url-picker.png"
+    },
+    {
+      "name": "save-cancel-actions",
+      "path": "C:\\Users\\Owner\\source\\repos\\LearnSqlite\\Learning\\Images\\AddHeroPage-block4-save-cancel-actions.png"
+    }
+  ]
+}
